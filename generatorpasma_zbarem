@@ -1,0 +1,47 @@
+import numpy as np
+import pyaudio
+import tkinter as tk
+
+p = pyaudio.PyAudio()
+
+def set_frequency(event):
+    global f
+    f = float(scale.get())
+    print("Frequency:", f)
+root = tk.Tk()
+root.title("Frequency Bar")
+scale = tk.Scale(root, from_=20, to=20000, orient="horizontal", resolution=10, length=500, sliderlength=30)
+scale.pack()
+scale.bind("<ButtonRelease-1>", set_frequency)
+root.mainloop()
+
+volume = 1     # set the volume
+fs = 44100       # set the sample rate
+
+# generate sine wave
+sine_wave = (np.sin(2*np.pi*np.arange(fs*20)*f/fs)).astype(np.float32)
+
+# initialize the stream
+stream = p.open(format=pyaudio.paFloat32,
+                channels=1,
+                rate=fs,
+                output=True)
+
+# start the stream
+def start():
+    stream.start_stream()
+start()
+
+# play the sine wave
+def play():
+    stream.write(volume*sine_wave)
+play()
+
+# stop the stream
+def stop():
+    stream.stop_stream()
+    stream.close()
+stop()
+
+# terminate the pyaudio object
+p.terminate()
