@@ -1,0 +1,30 @@
+import csv
+import matplotlib.pyplot as plt
+
+# Load the x, y data from the CSV file
+x = []
+y = []
+with open("data.csv") as file:
+    reader = csv.reader(file)
+    for row in reader:
+        x.append(int(row[0]))
+        y.append(int(row[1]))
+
+
+print(x)
+print(y)
+
+import matplotlib.pyplot as plt
+
+# Define the frequencies and hearing thresholds
+
+# Create the audiogram plot
+fig, ax = plt.subplots()
+ax.plot(x, y, 'bo-')
+ax.set_xscale('log')
+ax.set_xlabel('Częstotliwość (Hz)')
+ax.set_ylabel('Próg słyszenia (dB HL)')
+ax.set_title('Audiogram')
+plt.grid(True)
+
+plt.show()
