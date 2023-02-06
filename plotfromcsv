@@ -1,30 +1,39 @@
-import csv
 import matplotlib.pyplot as plt
+import csv
+
+# Define the x, y1, and y2 data
+x = []
+y1 = []
+y2 = []
 
 # Load the x, y data from the CSV file
-x = []
-y = []
 with open("data.csv") as file:
     reader = csv.reader(file)
     for row in reader:
         x.append(int(row[0]))
-        y.append(int(row[1]))
+        y1.append(int(row[1]))
+        y2.append(int(row[2]))
+# Create the first chart, dla lewego
+def lewe():
+    fig1, ax1 = plt.subplots()
+    ax1.plot(x, y1)
+    ax1.scatter(x,y1)
+    ax1.set_title('Ucho LEWE')
+    ax1.set_xlabel('Częstotliwość (Hz)')
+    ax1.set_ylabel('Próg słyszenia (dB HL)')
+    ax1.set_ylim(10, -100)
+    ax1.invert_yaxis()
+lewe()
 
-
-print(x)
-print(y)
-
-import matplotlib.pyplot as plt
-
-# Define the frequencies and hearing thresholds
-
-# Create the audiogram plot
-fig, ax = plt.subplots()
-ax.plot(x, y, 'bo-')
-ax.set_xscale('log')
-ax.set_xlabel('Częstotliwość (Hz)')
-ax.set_ylabel('Próg słyszenia (dB HL)')
-ax.set_title('Audiogram')
-plt.grid(True)
-
+# Create the second chart, dla prawego
+def prawe():
+    fig2, ax2 = plt.subplots()
+    ax2.plot(x, y2)
+    ax2.scatter(x, y2)
+    ax2.set_title('Ucho PRAWE')
+    ax2.set_xlabel('Częstotliwość (Hz)')
+    ax2.set_ylabel('Próg słyszenia (dB HL)')
+    ax2.set_ylim(10, -100)
+    ax2.invert_yaxis()
+prawe()
 plt.show()
