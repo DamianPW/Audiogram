@@ -1,0 +1,53 @@
+import csv
+import matplotlib.pyplot as plt
+
+def save_to_csv(x, y1, y2):
+    with open('data.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["x", "y1", "y2"])
+        writer.writerow([x, y1, y2])
+
+def read_from_csv():
+    x_values = []
+    y1_values = []
+    y2_values = []
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        next(reader)
+        for row in reader:
+            x_values.append(int(row[0]))
+            y1_values.append(int(row[1]))
+            y2_values.append(int(row[2]))
+    return x_values, y1_values, y2_values
+
+
+x = int(input("Enter x: "))
+y1 = int(input("Enter y1: "))
+y2 = int(input("Enter y2: "))
+
+save_to_csv(x, y1, y2)
+x, y1, y2 = read_from_csv()
+
+def lewe():
+    fig1, ax1 = plt.subplots()
+    ax1.plot(x, y1)
+    ax1.scatter(x,y1)
+    ax1.set_title('Ucho LEWE')
+    ax1.set_xlabel('Częstotliwość (Hz)')
+    ax1.set_ylabel('Próg słyszenia (dB HL)')
+    ax1.set_ylim(10, -100)
+    ax1.invert_yaxis()
+lewe()
+
+# Create the second chart, dla prawego
+def prawe():
+    fig2, ax2 = plt.subplots()
+    ax2.plot(x, y2)
+    ax2.scatter(x, y2)
+    ax2.set_title('Ucho PRAWE')
+    ax2.set_xlabel('Częstotliwość (Hz)')
+    ax2.set_ylabel('Próg słyszenia (dB HL)')
+    ax2.set_ylim(10, -100)
+    ax2.invert_yaxis()
+prawe()
+plt.show()
